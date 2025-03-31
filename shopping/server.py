@@ -28,7 +28,9 @@ INVENTORY = {
 }
 
 # Mock shopping carts
-SHOPPING_CARTS: Dict[str, List[Dict[str, Any]]] = {}
+# SHOPPING_CARTS: Dict[str, List[Dict[str, Any]]] = {}
+shopping_cart = []
+
 
 @mcp.tool()
 async def list_items() -> List[Dict[str, Any]]:
@@ -47,16 +49,15 @@ async def get_item(item_id: str) -> Dict[str, Any]:
     return INVENTORY[item_id]
 
 @mcp.tool()
-async def add_to_cart(user_id: str, item_id: str, quantity: int = 1) -> Dict[str, Any]:
-    """Add an item to the user's shopping cart.
+async def add_to_cart(item_id: str, quantity: int = 1) -> Dict[str, Any]:
+    """Add an item to the shopping cart.
     
     Args:
-        user_id: The ID of the user
         item_id: The ID of the item to add
         quantity: Number of items to add (default: 1)
     """
-    if user_id not in SHOPPING_CARTS:
-        SHOPPING_CARTS[user_id] = []
+    # if user_id not in SHOPPING_CARTS:
+    #     SHOPPING_CARTS[user_id] = []
     
     item = INVENTORY.get(item_id)
     if not item:
@@ -82,11 +83,11 @@ async def add_to_cart(user_id: str, item_id: str, quantity: int = 1) -> Dict[str
     if "sizes" in item:
         cart_item["sizes"] = item["sizes"]
     
-    SHOPPING_CARTS[user_id].append(cart_item)
+    shopping_cart.append(cart_item)
     
     return {
         "message": f"Added {item['name']} to cart",
-        "cart": SHOPPING_CARTS[user_id]
+        "cart": shopping_cart
     }
 
 @mcp.tool()
@@ -96,9 +97,7 @@ async def get_cart(user_id: str) -> List[Dict[str, Any]]:
     Args:
         user_id: The ID of the user whose cart to retrieve
     """
-    if user_id not in SHOPPING_CARTS:
-        return []
-    return SHOPPING_CARTS[user_id]
+    return shopping_cart
 
 @mcp.tool()
 async def search_items(query: str) -> List[Dict[str, Any]]:
@@ -113,10 +112,10 @@ async def search_items(query: str) -> List[Dict[str, Any]]:
         if query in item["name"].lower() or query in item["category"].lower()
     ]
 
-@mcp.tool()
-async def get_categories() -> List[str]:
-    """Get all available product categories."""
-    return list(set(item["category"] for item in INVENTORY.values()))
+# @mcp.tool()
+# async def get_categories() -> List[str]:
+#     """Get all available product categories."""
+#     return list(set(item["category"] for item in INVENTORY.values()))
 
 @mcp.tool()
 async def get_items_by_category(category: str) -> List[Dict[str, Any]]:
