@@ -1,6 +1,6 @@
 # Shopping Assistant with LLM
 
-A modern online merchant website with a chatbot powered by GPT-4 that helps as a shopping assistant. The application uses a microservice architecture with MCP (Message Channel Provider) servers for shopping and payment functionality.
+A modern online merchant website with a chatbot powered by GPT-4 that helps as a shopping assistant. The application uses a MCP servers for shopping and payment functionality.
 
 ## Architecture
 
@@ -69,7 +69,7 @@ The shopping assistant can help with:
 
 ## Development
 
-The application uses a microservice architecture with MCP (Message Channel Provider) for inter-service communication. Each backend service exposes its functionality as MCP tools that can be used by the LLM agent.
+The application uses an architecture with MCP for inter-service communication. Each backend service exposes its functionality as MCP tools that can be used by the LLM agent.
 
 ### Project Structure
 
